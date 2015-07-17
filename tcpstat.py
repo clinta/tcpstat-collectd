@@ -1,5 +1,30 @@
 import collectd
 
+CONFIGS = []
+
+
+def configure_callback(conf):
+  for node in conf.children:
+
+    promiscuous = True
+    linklayer = False
+
+    key = node.key.lower()
+    val = node.values
+
+    if key == 'interface':
+      interface = val[0]
+      continue
+
+    if key == 'promiscuous':
+      promiscous = val[0]
+
+    if key == 'linklayer':
+      linklayer = val[0]
+
+    if key == 'filter_expr':
+      filter_expr = val.join(' ')
+
 
 def init_callback:
 
@@ -17,4 +42,4 @@ def write(vl, data=None):
 
 collectd.register_init(init_callback)
 collectd.register_config(configure_callback)
-collectd.register_read(read_callback)
+ncollectd.register_read(read_callback)
